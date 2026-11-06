@@ -115,6 +115,8 @@
 }
 
 /* Pinned, scroll-driven mode (matches the GSAP media query). */
+
+/* Pinned, scroll-driven mode */
 @media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
   .gallery__viewport {
     overflow: visible;
@@ -123,21 +125,45 @@
     min-height: 100svh;
     display: flex;
     align-items: center;
-    padding-block: 4rem;
+    padding-block: clamp(1.5rem, 3vh, 2.5rem);
   }
+
   .gallery__track {
-    padding-inline: max(var(--gutter), calc((100vw - var(--max-w)) / 2 + var(--gutter))) 12vw;
+    padding-inline:
+      max(var(--gutter), calc((100vw - var(--max-w)) / 2 + var(--gutter)))
+      12vw;
     will-change: transform;
   }
+
   .memory {
-    width: clamp(300px, 26vw, 380px);
+    width: clamp(270px, 23vw, 330px);
+    padding-top: clamp(2rem, 5vh, 4rem);
   }
+
   .memory--low {
-    margin-top: 10vh;
+    margin-top: 5vh;
   }
+
   .memory__frame .event-art {
     aspect-ratio: 1;
   }
+
+  .memory__caption {
+    gap: 0.4rem;
+  }
+
+  .memory__title {
+    font-size: var(--fs-lg);
+  }
+
+  .memory__text {
+    line-height: 1.45;
+  }
+
+  .memory__source {
+    line-height: 1.4;
+  }
+
   .gallery__hint {
     margin-top: 1rem;
   }
