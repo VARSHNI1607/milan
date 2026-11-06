@@ -1,0 +1,114 @@
+/* Buttons are square-cornered "block prints": a solid ink offset that the
+   button presses into on hover/active. No pills, no soft shadows. */
+.btn {
+  --btn-bg: var(--primary);
+  --btn-fg: var(--c-white);
+  --btn-border: var(--c-indigo);
+  --btn-shadow: var(--c-indigo);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.8rem 1.4rem;
+  border: 2px solid var(--btn-border);
+  border-radius: var(--radius-sm);
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  box-shadow: 4px 4px 0 var(--btn-shadow);
+  transition:
+    transform var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out),
+    background-color var(--dur-fast);
+  white-space: nowrap;
+}
+.btn:hover {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 var(--btn-shadow);
+}
+.btn:active {
+  transform: translate(4px, 4px);
+  box-shadow: 0 0 0 var(--btn-shadow);
+}
+.btn[disabled],
+.btn[aria-disabled='true'] {
+  cursor: not-allowed;
+  opacity: 0.7;
+  transform: none;
+}
+.btn--primary:hover {
+  --btn-bg: var(--primary-hover);
+}
+.btn--secondary {
+  --btn-bg: var(--c-parchment);
+  --btn-fg: var(--c-indigo);
+}
+.btn--secondary:hover {
+  --btn-bg: var(--c-marigold);
+}
+.btn--marigold {
+  --btn-bg: var(--c-marigold);
+  --btn-fg: var(--c-indigo);
+}
+.btn--on-dark {
+  --btn-border: var(--c-parchment);
+  --btn-shadow: var(--c-marigold);
+}
+.btn--ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--c-indigo);
+  --btn-border: transparent;
+  box-shadow: none;
+  padding-inline: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-thickness: 2px;
+}
+.btn--ghost:hover {
+  transform: none;
+  box-shadow: none;
+  color: var(--primary);
+}
+.btn--sm {
+  min-height: 40px;
+  padding: 0.5rem 0.9rem;
+  font-size: var(--fs-xs);
+}
+.btn--lg {
+  min-height: 56px;
+  padding: 1rem 1.75rem;
+  font-size: var(--fs-base);
+}
+.btn__icon {
+  width: 1.15em;
+  height: 1.15em;
+  flex-shrink: 0;
+  transition: transform var(--dur-fast) var(--ease-out);
+}
+.btn:hover .btn__icon:last-child {
+  transform: translateX(3px);
+}
+.btn.is-loading .btn__label,
+.btn.is-loading .btn__icon {
+  visibility: hidden;
+}
+.btn__spinner {
+  position: absolute;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2.5px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 700ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

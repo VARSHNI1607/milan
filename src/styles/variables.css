@@ -1,0 +1,106 @@
+/* ==========================================================================
+   MILAN design tokens — "Indian Maximalism, Culture in Motion"
+
+   Colour usage rules
+   - Parchment  : the default page ground. Most reading happens here.
+   - Indigo     : ink. Body text, dark "night" sections (footer, mobile menu,
+                  stats band). Never used as a gradient.
+   - Vermilion  : primary action colour. Primary buttons, key highlights,
+                  active filter. One vermilion focal point per viewport.
+   - Marigold   : secondary / celebration. Decoration, numbers, motifs on
+                  dark grounds. Never used for body text on parchment.
+   - Magenta    : controlled accent. Focus rings, tiny highlights, the
+                  "Technical" and "Fashion" posters. Never a large surface
+                  outside posters.
+   ========================================================================== */
+
+:root {
+  /* Core palette */
+  --c-vermilion: #e2391b;
+  --c-vermilion-deep: #b42a10;
+  --c-marigold: #f5a623;
+  --c-marigold-soft: #ffd27a;
+  --c-indigo: #1b1446;
+  --c-indigo-night: #120c33;
+  --c-indigo-soft: #3a2f8f;
+  --c-parchment: #f6eedf;
+  --c-parchment-deep: #eadbc0;
+  --c-magenta: #e5197a;
+  --c-kumkum: #6e1a12;
+  --c-white: #fffaf1;
+
+  /* Semantic roles */
+  --bg: var(--c-parchment);
+  --bg-raised: var(--c-white);
+  --bg-sunken: var(--c-parchment-deep);
+  --ink: var(--c-indigo);
+  --ink-muted: #4a4370;
+  --ink-inverse: var(--c-parchment);
+  --primary: var(--c-vermilion);
+  --primary-hover: var(--c-vermilion-deep);
+  --secondary: var(--c-marigold);
+  --accent: var(--c-magenta);
+  --line: rgba(27, 20, 70, 0.16);
+  --line-strong: var(--c-indigo);
+  --error: #b3140f;
+  --error-bg: #fde6e1;
+  --success: #1d6b45;
+  --success-bg: #e3f3e8;
+  --focus: var(--c-magenta);
+
+  /* Typography */
+  --font-display: 'Bricolage Grotesque Variable', 'Bricolage Grotesque', 'Arial Narrow', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+  --font-body: 'Hanken Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* Fluid type scale (375px → 1440px) */
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1.0625rem;
+  --fs-md: clamp(1.125rem, 1.05rem + 0.35vw, 1.3rem);
+  --fs-lg: clamp(1.35rem, 1.2rem + 0.7vw, 1.75rem);
+  --fs-xl: clamp(1.75rem, 1.4rem + 1.6vw, 2.75rem);
+  --fs-2xl: clamp(2.25rem, 1.6rem + 3vw, 4.25rem);
+  --fs-3xl: clamp(2.75rem, 1.8rem + 4.6vw, 6rem);
+  --fs-mega: clamp(4.5rem, 1.2rem + 15.5vw, 15rem);
+
+  /* Spacing */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+  --section-y: clamp(4rem, 3rem + 5vw, 8rem);
+  --gutter: clamp(1rem, 0.6rem + 2vw, 2.5rem);
+  --max-w: 1320px;
+
+  /* Shape — square, block-print feel. Radius kept deliberately small. */
+  --radius-sm: 2px;
+  --radius: 4px;
+  --shadow-print: 5px 5px 0 var(--c-indigo);
+  --shadow-print-sm: 3px 3px 0 var(--c-indigo);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-fast: 160ms;
+  --dur: 320ms;
+  --dur-slow: 700ms;
+
+  --nav-h: 68px;
+  --z-nav: 50;
+  --z-menu: 60;
+  --z-modal: 80;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}

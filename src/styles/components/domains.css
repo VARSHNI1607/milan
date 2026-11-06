@@ -1,0 +1,135 @@
+.domains__head {
+  display: grid;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+.domains__head .eyebrow {
+  color: var(--c-vermilion-deep);
+  margin-bottom: 1rem;
+}
+.domains__head .serif-accent {
+  color: var(--c-vermilion);
+}
+.domains__head a {
+  color: var(--c-indigo);
+}
+.domains__list {
+  border-top: 2px solid var(--c-indigo);
+}
+.domains__item {
+  border-bottom: 2px solid var(--c-indigo);
+}
+.domains__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 2.25rem 1fr 64px;
+  grid-template-areas:
+    'num name thumb'
+    'num note thumb';
+  column-gap: 1rem;
+  row-gap: 0.25rem;
+  align-items: center;
+  padding: 1.1rem 0.5rem;
+  text-decoration: none;
+  color: inherit;
+  overflow: hidden;
+  isolation: isolate;
+}
+/* Ink floods in from the left on hover — like a print roller. */
+.domains__row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--c-indigo);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
+}
+a.domains__row:hover::before,
+a.domains__row:focus-visible::before {
+  transform: scaleX(1);
+}
+a.domains__row:hover,
+a.domains__row:focus-visible {
+  color: var(--c-parchment);
+}
+a.domains__row:hover .domains__note,
+a.domains__row:focus-visible .domains__note {
+  color: var(--c-marigold-soft);
+}
+.domains__num {
+  grid-area: num;
+  align-self: start;
+  padding-top: 0.5rem;
+  font-weight: 700;
+  font-size: var(--fs-xs);
+  color: var(--c-vermilion);
+}
+.domains__name {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(1.9rem, 1.2rem + 3.2vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+.domains__note {
+  grid-area: note;
+  font-size: var(--fs-sm);
+  color: var(--ink-muted);
+  max-width: 52ch;
+  transition: color var(--dur);
+}
+.domains__thumb {
+  grid-area: thumb;
+  width: 64px;
+  border: 2px solid currentColor;
+}
+.domains__thumb:empty {
+  border: 0;
+}
+.domains__arrow {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .domains__head {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+  }
+  .domains__row {
+    grid-template-columns: 3rem minmax(0, 1.1fr) minmax(0, 1fr) 96px 40px;
+    grid-template-areas: 'num name note thumb arrow';
+    padding: 1.4rem 1rem;
+  }
+  .domains__num {
+    align-self: center;
+    padding-top: 0;
+  }
+  .domains__thumb {
+    width: 96px;
+    opacity: 0;
+    transform: translateX(-16px) rotate(-4deg);
+    transition:
+      opacity var(--dur) var(--ease-out),
+      transform var(--dur) var(--ease-out);
+  }
+  a.domains__row:hover .domains__thumb,
+  a.domains__row:focus-visible .domains__thumb {
+    opacity: 1;
+    transform: none;
+  }
+  .domains__arrow {
+    display: block;
+    grid-area: arrow;
+    width: 28px;
+    height: 28px;
+    justify-self: end;
+    transition: transform var(--dur) var(--ease-out);
+  }
+  a.domains__row:hover .domains__arrow {
+    transform: translateX(6px);
+    color: var(--c-marigold);
+  }
+}

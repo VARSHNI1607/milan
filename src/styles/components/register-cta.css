@@ -1,0 +1,36 @@
+.register-cta {
+  position: relative;
+  background: var(--c-vermilion);
+  color: var(--c-white);
+  overflow: hidden;
+}
+.register-cta__inner {
+  padding-block: clamp(3.5rem, 2rem + 6vw, 7rem);
+  display: grid;
+  gap: 1.25rem;
+  justify-items: start;
+}
+.register-cta .eyebrow {
+  color: var(--c-marigold-soft);
+}
+.register-cta__title {
+  font-size: var(--fs-3xl);
+  max-width: 14ch;
+}
+.register-cta__title .serif-accent {
+  color: var(--c-marigold);
+}
+.register-cta__text {
+  max-width: 50ch;
+  font-size: var(--fs-md);
+}
+.register-cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+.register-cta .btn--on-dark {
+  --btn-border: var(--c-indigo);
+  --btn-shadow: var(--c-indigo);
+}

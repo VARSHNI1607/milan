@@ -1,0 +1,32 @@
+.not-found {
+  display: grid;
+  justify-items: start;
+  gap: 1.25rem;
+  padding-block: 5rem 6rem;
+}
+.not-found .eyebrow {
+  color: var(--c-vermilion-deep);
+}
+.not-found__art {
+  width: 180px;
+  height: 180px;
+  animation: rangoli-spin 60s linear infinite;
+}
+.not-found__title {
+  font-size: var(--fs-3xl);
+  max-width: 14ch;
+}
+.not-found__title .serif-accent {
+  color: var(--c-vermilion);
+}
+.not-found__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+@keyframes rangoli-spin {
+  to {
+    rotate: 360deg;
+  }
+}

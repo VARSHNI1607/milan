@@ -1,0 +1,31 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: inherit;
+}
+.logo__mark {
+  width: 30px;
+  height: 30px;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.logo:hover .logo__mark {
+  transform: rotate(90deg);
+}
+.logo__word {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.45rem;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+.logo__sub {
+  align-self: flex-start;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 0.1rem 0.3rem;
+  border: 1.5px solid currentColor;
+  line-height: 1.2;
+}
