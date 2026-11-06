@@ -1,5 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { scrollToTarget } from '../../motion/lenis.js';
+import { ScrollTrigger } from '../../motion/gsap.js';
 
 /**
  * Route-level scroll + focus handling for a single-page app:
@@ -22,7 +24,8 @@ export default function ScrollManager() {
       const raf = requestAnimationFrame(() => {
         const target = document.getElementById(id);
         if (target) {
-          target.scrollIntoView({ behavior: pathChanged ? 'auto' : 'smooth', block: 'start' });
+          if (pathChanged) ScrollTrigger.refresh();
+          scrollToTarget(target, { immediate: pathChanged });
           target.focus?.({ preventScroll: true });
         }
       });
@@ -30,7 +33,7 @@ export default function ScrollManager() {
     }
 
     if (pathChanged) {
-      window.scrollTo({ top: 0, behavior: 'auto' });
+      scrollToTarget(0, { immediate: true });
       document.getElementById('main')?.focus({ preventScroll: true });
     }
     return undefined;

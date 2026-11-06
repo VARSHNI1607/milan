@@ -15,6 +15,7 @@ import Rangoli from '../components/decor/Rangoli.jsx';
 import Button from '../components/ui/Button.jsx';
 import { RotateCcw } from 'lucide-react';
 import '../styles/components/events-page.css';
+import SplitReveal from '../components/motion/SplitReveal.jsx';
 
 export default function Events({ events = allEvents }) {
   useDocumentTitle('Events');
@@ -39,9 +40,9 @@ export default function Events({ events = allEvents }) {
         <Rangoli className="events-hero__rangoli" />
         <div className="container">
           <p className="eyebrow">Events explorer</p>
-          <h1 className="events-hero__title">
+          <SplitReveal as="h1" className="events-hero__title">
             Find your <span className="serif-accent">stage.</span>
-          </h1>
+          </SplitReveal>
           <p className="lead events-hero__lead">
             Search by name or keyword, filter by domain, and open any event for the full brief.
           </p>
@@ -82,6 +83,7 @@ export default function Events({ events = allEvents }) {
                 event={event}
                 onOpen={openEvent}
                 featured={showFeatured && index === 0}
+                index={index}
               />
             ))}
           </div>

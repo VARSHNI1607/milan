@@ -222,3 +222,42 @@ button {
     transform: none;
   }
 }
+
+/* ---------- Lenis (smooth scroll) ---------- */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+html.lenis {
+  scroll-behavior: auto;
+}
+.lenis.lenis-stopped {
+  overflow: clip;
+}
+.lenis [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+/* ---------- Split text reveal ---------- */
+.split__mask {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  /* room for descenders and the italic serif overhang */
+  padding: 0 0.06em 0.12em;
+  margin: 0 -0.06em -0.12em;
+}
+.split__word {
+  display: inline-block;
+}
+
+/* Pattern bands clip their (wider) SVG so it can drift sideways. */
+.toran,
+.border-band {
+  overflow: hidden;
+  line-height: 0;
+}
+.toran svg,
+.border-band svg {
+  max-width: none;
+}

@@ -15,10 +15,6 @@
 .marquee__track {
   display: flex;
   width: max-content;
-  animation: marquee var(--marquee-speed, 40s) linear infinite;
-}
-.marquee:hover .marquee__track {
-  animation-play-state: paused;
 }
 .marquee__group {
   display: flex;
@@ -43,13 +39,4 @@
   text-transform: none;
   font-size: 1.15em;
 }
-@keyframes marquee {
-  to {
-    transform: translateX(-50%);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .marquee__track {
-    animation: none;
-  }
-}
+

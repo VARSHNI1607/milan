@@ -1,0 +1,39 @@
+.page-transition {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  pointer-events: none;
+}
+.page-transition__panel {
+  position: absolute;
+  inset: 0;
+  will-change: transform;
+}
+.page-transition__panel--vermilion {
+  background: var(--c-vermilion);
+}
+.page-transition__panel--indigo {
+  background: var(--c-indigo);
+  display: grid;
+  place-items: center;
+  /* scalloped lower edge, like the toran */
+  -webkit-mask: radial-gradient(14px at 50% calc(100% - 0px), #0000 97%, #000) 50% / 28px 100%;
+  mask: radial-gradient(14px at 50% 100%, #0000 97%, #000) 50% / 28px 100%;
+}
+.page-transition__centre {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  color: var(--c-parchment);
+}
+.page-transition__centre svg {
+  width: 72px;
+  height: 72px;
+}
+.page-transition__label {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: var(--fs-xl);
+  letter-spacing: -0.01em;
+}

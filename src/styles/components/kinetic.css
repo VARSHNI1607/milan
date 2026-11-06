@@ -1,0 +1,48 @@
+.kinetic {
+  overflow: hidden;
+  padding-block: clamp(2.5rem, 2rem + 4vw, 6rem);
+  display: grid;
+  gap: 0.25rem;
+  background: var(--bg);
+}
+.kinetic__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+  width: max-content;
+  font-size: clamp(3rem, 1.5rem + 7vw, 9rem);
+  line-height: 1;
+  white-space: nowrap;
+  will-change: transform;
+}
+.kinetic__row--theme {
+  transform-origin: 50% 50%;
+}
+.kinetic__word--display {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--c-indigo);
+}
+.kinetic__word--serif {
+  font-family: var(--font-serif);
+  font-style: italic;
+  color: var(--c-vermilion);
+  font-size: 0.8em;
+}
+.kinetic__word--outline {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: transparent;
+  -webkit-text-stroke: 2px var(--c-indigo);
+}
+.kinetic__row--theme .kinetic__word--outline:nth-of-type(4n + 3) {
+  color: var(--c-marigold);
+  -webkit-text-stroke: 0;
+}
+.kinetic__row:nth-child(3) .kinetic__word--display {
+  font-size: 0.7em;
+}

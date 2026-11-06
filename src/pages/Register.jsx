@@ -3,6 +3,7 @@ import RegistrationForm from '../components/registration/RegistrationForm.jsx';
 import Rangoli from '../components/decor/Rangoli.jsx';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 import { festival } from '../data/festival.js';
+import SplitReveal from '../components/motion/SplitReveal.jsx';
 
 export default function Register() {
   useDocumentTitle('Register');
@@ -15,9 +16,9 @@ export default function Register() {
         <Rangoli className="register-page__rangoli" palette="night" />
         <div className="register-page__aside-inner">
           <p className="eyebrow">Registration</p>
-          <h1 className="register-page__title">
+          <SplitReveal as="h1" className="register-page__title">
             Take the <span className="serif-accent">stage.</span>
-          </h1>
+          </SplitReveal>
           <p className="register-page__text">
             Pick an event, tell us who you are, and get a confirmation reference. It takes under a minute.
           </p>

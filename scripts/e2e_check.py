@@ -8,7 +8,7 @@ def check(name, cond):
     results.append(("PASS" if cond else "FAIL")+"  "+name)
 with sync_playwright() as p:
     b = p.chromium.launch()
-    ctx = b.new_context(viewport={"width":1280,"height":900})
+    ctx = b.new_context(viewport={"width":1280,"height":900}); ctx.add_init_script("sessionStorage.setItem('milan-intro-seen','1')")  # skip the opening sequence
     pg = ctx.new_page()
     errs=[]
     pg.on("console", lambda m: errs.append(m.text) if m.type=="error" else None)
@@ -16,7 +16,7 @@ with sync_playwright() as p:
 
     # --- Navigation
     pg.goto(B+"/", wait_until="networkidle")
-    pg.click(".navbar__desktop >> text=Events"); pg.wait_for_url("**/events")
+    pg.click(".navbar__desktop >> text=Events"); pg.wait_for_url("**/events"); pg.wait_for_timeout(300)
     check("nav: Events link routes to /events", pg.url.endswith("/events"))
     check("nav: Events link active", pg.locator(".navbar__link.is-active").inner_text()=="Events")
     pg.click(".navbar__desktop >> text=About"); pg.wait_for_timeout(800)
@@ -113,7 +113,7 @@ with sync_playwright() as p:
     ctx.close()
 
     # --- Mobile menu
-    ctx = b.new_context(viewport={"width":375,"height":812}); pg = ctx.new_page()
+    ctx = b.new_context(viewport={"width":375,"height":812}); ctx.add_init_script("sessionStorage.setItem('milan-intro-seen','1')"); pg = ctx.new_page()
     pg.goto(B+"/", wait_until="networkidle")
     pg.click(".navbar__toggle"); pg.wait_for_timeout(300)
     check("mobile menu opens", pg.locator("#mobile-menu").is_visible() and pg.get_attribute(".navbar__toggle","aria-expanded")=="true")
@@ -125,6 +125,24 @@ with sync_playwright() as p:
     box = pg.locator(".modal__dialog").bounding_box()
     check(f"mobile modal is full-width sheet {box['width']}", box["width"]>=374)
     
+    ctx.close()
+
+    # --- Opening sequence & motion
+    ctx = b.new_context(viewport={"width":1280,"height":800}); pg = ctx.new_page()
+    pg.goto(B+"/"); pg.wait_for_timeout(300)
+    check("intro plays on first home visit", pg.locator(".intro").count()==1)
+    check("intro skip button focused", pg.evaluate("document.activeElement.className")=="intro__skip")
+    check("page behind intro is inert", pg.evaluate("document.querySelector('main').hasAttribute('inert')"))
+    pg.keyboard.press("Escape"); pg.wait_for_timeout(1000)
+    check("Escape skips intro", pg.locator(".intro").count()==0 and not pg.evaluate("document.querySelector('main').hasAttribute('inert')"))
+    pg.reload(); pg.wait_for_timeout(300)
+    check("intro not replayed in same session", pg.locator(".intro").count()==0)
+    pg.goto(B+"/events?event=skyward", wait_until="networkidle")
+    check("deep link opens straight to content", pg.locator("#event-modal-title").inner_text()=="Skyward")
+    ctx.close()
+    ctx = b.new_context(viewport={"width":1280,"height":800}, reduced_motion="reduce"); pg = ctx.new_page()
+    pg.goto(B+"/", wait_until="networkidle")
+    check("reduced motion: no intro, no smooth scroll", pg.locator(".intro").count()==0 and not pg.evaluate("document.documentElement.classList.contains('lenis')"))
     ctx.close(); b.close()
 print("\n".join(results))
 print(sum(r.startswith("PASS") for r in results), "/", len(results))

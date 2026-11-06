@@ -38,8 +38,6 @@
 .hero__letter {
   position: relative;
   display: inline-block;
-  animation: letter-in 900ms var(--ease-out) both;
-  animation-delay: calc(var(--i) * 70ms + 100ms);
 }
 .hero__letter::before {
   content: attr(data-letter);
@@ -61,7 +59,6 @@
   color: var(--c-vermilion);
   margin-top: 0.15em;
   margin-left: 0.1em;
-  animation: fade-up 900ms var(--ease-out) 500ms both;
 }
 .hero__tagline {
   margin-top: 1.75rem;
@@ -101,6 +98,10 @@
   width: 100%;
   margin-inline: auto;
 }
+.hero__rangoli-wrap {
+  position: absolute;
+  inset: 0;
+}
 .hero__rangoli {
   position: absolute;
   width: 115%;
@@ -111,33 +112,35 @@
   opacity: 0.95;
   animation: rangoli-spin 120s linear infinite;
 }
+.hero__collage {
+  perspective: 900px;
+}
 .hero__poster {
   position: absolute;
+  transform-style: preserve-3d;
+}
+.hero__poster-card {
   border: 3px solid var(--c-indigo);
   box-shadow: var(--shadow-print);
   background: var(--c-indigo);
-  animation: poster-in 1s var(--ease-out) both;
 }
 .hero__poster--a {
   width: 46%;
   left: 4%;
   top: 6%;
   rotate: -5deg;
-  animation-delay: 350ms;
 }
 .hero__poster--b {
   width: 40%;
   right: 4%;
   top: 0;
   rotate: 4deg;
-  animation-delay: 500ms;
 }
 .hero__poster--c {
   width: 38%;
   right: 14%;
   bottom: 0;
   rotate: -2deg;
-  animation-delay: 650ms;
 }
 
 /* ---- Ticket ---- */

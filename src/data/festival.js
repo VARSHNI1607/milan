@@ -91,6 +91,11 @@ export const lineup2026 = {
 /**
  * Festival domains. Descriptions paraphrase formats documented for past
  * editions; they are not a promise of the next edition's line-up.
+ *
+ * `category` links the domain to the events filter (null = no sample events).
+ * `visual` overrides which poster style is shown (defaults to category).
+ * `image` (optional) — path to an authorised photograph in /public; when set,
+ * it replaces the illustrated poster in the hover reveal.
  */
 export const domains = [
   {
@@ -146,6 +151,7 @@ export const domains = [
     name: 'Funzone',
     note: 'Formerly “Informals” — treasure hunts and games-for-everyone.',
     category: null,
+    visual: 'Funzone',
   },
 ];
 

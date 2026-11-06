@@ -1,4 +1,5 @@
-import { useId } from 'react';
+import { useId, useRef } from 'react';
+import { useDrift } from '../../motion/useDrift.js';
 
 /**
  * A saree-border style band used as a section divider: a row of temple-
@@ -10,12 +11,14 @@ const TONES = {
   marigold: { bg: '#F5A623', fg: '#1B1446', dot: '#E2391B' },
 };
 
-export default function BorderBand({ tone = 'vermilion', className = '' }) {
+export default function BorderBand({ tone = 'vermilion', className = '', direction = -1 }) {
+  const ref = useRef(null);
+  useDrift(ref, 28 * 8, { direction });
   const { bg, fg, dot } = TONES[tone] ?? TONES.vermilion;
   const id = `p${useId().replace(/:/g, '')}`;
   return (
-    <div className={`border-band ${className}`} aria-hidden="true">
-      <svg width="100%" height="34" focusable="false">
+    <div ref={ref} className={`border-band ${className}`} aria-hidden="true">
+      <svg width="100%" height="34" focusable="false" style={{ width: 'calc(100% + 224px)' }}>
         <defs>
           <pattern id={id} width="28" height="34" patternUnits="userSpaceOnUse">
             <rect width="28" height="34" fill={bg} />

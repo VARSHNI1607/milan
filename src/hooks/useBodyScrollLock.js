@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
+import { stopScroll, startScroll } from '../motion/lenis.js';
 
-/** Locks page scroll while `locked` is true, without layout shift. */
+/** Locks page scroll while `locked` is true, without layout shift. Also pauses Lenis. */
 export function useBodyScrollLock(locked) {
   useEffect(() => {
     if (!locked) return undefined;
@@ -10,9 +11,11 @@ export function useBodyScrollLock(locked) {
     const prevPadding = body.style.paddingRight;
     body.style.overflow = 'hidden';
     if (scrollbar > 0) body.style.paddingRight = `${scrollbar}px`;
+    stopScroll();
     return () => {
       body.style.overflow = prevOverflow;
       body.style.paddingRight = prevPadding;
+      startScroll();
     };
   }, [locked]);
 }

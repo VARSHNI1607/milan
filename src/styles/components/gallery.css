@@ -1,0 +1,144 @@
+.gallery {
+  position: relative;
+  background: var(--c-indigo);
+  color: var(--c-parchment);
+  overflow: hidden;
+}
+.gallery__viewport {
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-marigold) transparent;
+  padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+}
+.gallery__viewport:focus-visible {
+  outline-offset: -6px;
+}
+.gallery__track {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.5rem, 1rem + 3vw, 4rem);
+  width: max-content;
+  padding-inline: var(--gutter);
+}
+.gallery__intro {
+  width: min(82vw, 420px);
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  display: grid;
+  gap: 1rem;
+}
+.gallery__intro .eyebrow {
+  color: var(--c-marigold);
+}
+.gallery__title {
+  font-size: var(--fs-2xl);
+}
+.gallery__title .serif-accent {
+  color: var(--c-marigold);
+}
+.gallery__lead {
+  color: rgba(246, 238, 223, 0.82);
+  max-width: 38ch;
+}
+.gallery__hint {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-md);
+  color: var(--c-marigold-soft);
+}
+
+.memory {
+  position: relative;
+  flex-shrink: 0;
+  width: min(78vw, 340px);
+  scroll-snap-align: center;
+  padding-top: clamp(3rem, 2rem + 4vw, 6.5rem);
+}
+.memory__year {
+  position: absolute;
+  top: 0;
+  left: -1rem;
+  z-index: 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(4.5rem, 3rem + 6vw, 10rem);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: transparent;
+  -webkit-text-stroke: 2px rgba(245, 166, 35, 0.55);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.memory__figure {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  display: grid;
+  gap: 1.1rem;
+}
+.memory__frame {
+  border: 3px solid var(--c-parchment);
+  box-shadow: 8px 8px 0 var(--c-marigold);
+  background: var(--c-parchment);
+  padding: 10px 10px 28px; /* print-like matte */
+}
+.memory__frame .event-art {
+  aspect-ratio: 4 / 5;
+}
+.memory__caption {
+  display: grid;
+  gap: 0.3rem;
+}
+.memory__year-label {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c-marigold);
+}
+.memory__title {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  line-height: 1.1;
+}
+.memory__text {
+  color: rgba(246, 238, 223, 0.82);
+  font-size: var(--fs-sm);
+}
+.memory__source {
+  font-size: var(--fs-xs);
+  color: rgba(246, 238, 223, 0.6);
+}
+.memory__source:hover {
+  color: var(--c-marigold);
+}
+
+/* Pinned, scroll-driven mode (matches the GSAP media query). */
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  .gallery__viewport {
+    overflow: visible;
+    scroll-snap-type: none;
+    min-height: 100vh;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    padding-block: 4rem;
+  }
+  .gallery__track {
+    padding-inline: max(var(--gutter), calc((100vw - var(--max-w)) / 2 + var(--gutter))) 12vw;
+    will-change: transform;
+  }
+  .memory {
+    width: clamp(300px, 26vw, 380px);
+  }
+  .memory--low {
+    margin-top: 10vh;
+  }
+  .memory__frame .event-art {
+    aspect-ratio: 1;
+  }
+  .gallery__hint {
+    margin-top: 1rem;
+  }
+}

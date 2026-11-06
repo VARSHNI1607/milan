@@ -89,8 +89,17 @@
   margin-top: 2rem;
 }
 .stat {
-  border-top: 2px solid var(--c-marigold);
+  position: relative;
   padding-top: 0.9rem;
+}
+.stat::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 2px;
+  background: var(--c-marigold);
+  transform: scaleX(var(--line, 1));
+  transform-origin: left;
 }
 .stat__value {
   font-family: var(--font-display);
@@ -129,10 +138,22 @@
   color: var(--c-vermilion);
 }
 .timeline {
+  position: relative;
   display: grid;
   gap: 0;
-  border-left: 3px solid var(--c-indigo);
   margin-left: 0.5rem;
+}
+/* The rail is drawn with a transform so it can follow the scroll. */
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--c-indigo);
+  transform: scaleY(var(--rail, 1));
+  transform-origin: top;
 }
 .timeline__item {
   position: relative;
@@ -149,6 +170,7 @@
   border: 3px solid var(--c-parchment);
   outline: 2px solid var(--c-indigo);
   rotate: 45deg;
+  scale: var(--pip, 1);
 }
 .timeline__year {
   font-family: var(--font-display);
@@ -210,9 +232,17 @@
   }
   .timeline {
     grid-template-columns: repeat(4, 1fr);
-    border-left: 0;
-    border-top: 3px solid var(--c-indigo);
     margin-left: 0;
+  }
+  .timeline::before {
+    left: 0;
+    right: 0;
+    top: -3px;
+    bottom: auto;
+    width: auto;
+    height: 3px;
+    transform: scaleX(var(--rail, 1));
+    transform-origin: left;
   }
   .timeline__item {
     padding: 1.75rem 1.5rem 0 0;

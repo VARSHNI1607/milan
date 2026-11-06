@@ -63,6 +63,7 @@ export default function Navbar() {
 
   return (
     <header
+      data-shell
       className={`navbar ${scrolled ? 'is-scrolled' : ''} ${hidden && !open ? 'is-hidden' : ''}`}
       data-open={open || undefined}
     >
@@ -105,6 +106,7 @@ export default function Navbar() {
         id="mobile-menu"
         ref={panelRef}
         className="mobile-menu"
+        data-lenis-prevent
         role="dialog"
         aria-modal="true"
         aria-label="Site menu"

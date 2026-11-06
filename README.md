@@ -35,6 +35,36 @@ Built for the **DSA Tech Team Recruitment — Frontend Development practical tas
 
 **Photography decision.** No verified, licensed festival photographs were available to bundle, so the site uses an original illustration system instead of unrelated stock images. Each event supports an optional `image` field — drop an official photo (with permission) into `public/` and set the path; it renders inside the same arch with a consistent duotone treatment.
 
+
+## Motion & interaction layer
+
+Inspired by the *interaction philosophy* of immersive festival and athlete sites (a site that feels alive under the cursor and the scroll), translated into MILAN’s own visual language — no borrowed branding, layouts or assets.
+
+| Moment | What happens | How |
+| --- | --- | --- |
+| Opening sequence | Sunburst petals bloom, MILAN rises letter by letter, a rangoli ring expands, the curtain lifts (~2s) | GSAP timeline. Once per session, only when landing on Home; **Skip** button, click or Esc; skipped under reduced motion; page behind is `inert` |
+| Hero | Rangoli, posters and wordmark sit on separate depth layers that follow the cursor; scrolling out spreads the letters and lets posters drift at different speeds | `gsap.quickTo` (no React re-renders); fine pointers only. Touch gets the scroll-driven depth instead |
+| Headings | Words rise out of masks as they enter | `<SplitReveal>` — screen readers get the sentence once |
+| Lines & patterns | Timeline rail draws with the scroll, stat rules sweep in, toran and saree borders drift sideways | Transform-only scrubbed ScrollTriggers; CSS custom properties for pseudo-element lines |
+| Kinetic type | Giant domain names and the MILAN’26 theme slide in opposite directions | Scrubbed `xPercent` |
+| Marquee | Speeds up and leans with scroll velocity; pauses on hover and off-screen | GSAP loop + `getVelocity()` |
+| Event cards | Subtle 3D tilt, poster zoom, sliding category label, a vermilion line traces the border, title/description shift | Tilt via GSAP (pointer only); the rest is CSS and also triggers on keyboard focus |
+| Card → details | The card’s poster flies into the modal while the dialog unclips outward from the card | Shared-element “ghost” + `clip-path`; URL, focus trap, Escape and Back unchanged |
+| Domains | Hovering/focusing a row tints the section, dims the others and shows that domain’s poster in a frame trailing the cursor | Imperative GSAP; touch and reduced-motion users see inline posters instead |
+| Memories gallery | Desktop: the section pins and scroll drives it sideways, numerals move at a different depth. Mobile: native swipe | ScrollTrigger `pin` + `containerAnimation`; CSS scroll-snap fallback |
+| Page transitions | Indigo/vermilion panels wipe up past a spinning sunburst and the page name | Reveal-only — the new page is already rendered underneath and interactive (no navigation delay) |
+| Cursor companion | A marigold kolam diamond that grows over interactive elements and says “View” over cards | Fine pointers only; native cursor stays visible |
+| Smooth scrolling | Eased wheel scrolling on desktop | Lenis driven by GSAP’s ticker; native on touch; paused while the modal/menu is open; off under reduced motion |
+
+**Engineering rules followed**
+- Only `transform` and `opacity` are animated continuously; `clip-path` is used for one-off reveals only.
+- Every animation lives inside `useGSAP` / `gsap.matchMedia`, so it is reverted and its listeners removed on unmount, and disabled automatically under `prefers-reduced-motion`.
+- `opacity` (never `autoAlpha`) on anything containing links or buttons, so unrevealed content stays in the tab order.
+- Pointer-driven effects never set React state.
+- New dependencies: `gsap`, `@gsap/react`, `lenis`. No Three.js.
+
+**Photographs.** None from past editions have been supplied or cleared for reuse, so the gallery and domain reveals show original illustrated frames, labelled “Illustration”. To add authorised photos, see the instructions at the top of `src/data/memories.js` (gallery) and the `image` field in `src/data/festival.js` (domains).
+
 ## Features
 
 - **Home** — art-directed hero (animated wordmark, poster collage, honest edition info: MILAN’26 is shown as *last* edition and MILAN’27 as *to be announced*), About MILAN with animated stats and a sourced legacy timeline, nine-domain highlights index, a scrollable rail of sample events, registration CTA.
@@ -66,7 +96,7 @@ Built for the **DSA Tech Team Recruitment — Frontend Development practical tas
 
 ## Tech stack
 
-React 18 · Vite 5 · JavaScript · React Router 6 · Lucide React (icons) · plain CSS with custom properties · Fontsource (self-hosted fonts) · Vitest (unit tests) · Vercel.
+React 18 · Vite · JavaScript · React Router 7 · GSAP + ScrollTrigger · Lenis · Lucide React (icons) · plain CSS with custom properties · Fontsource (self-hosted fonts) · Vitest (unit tests) · Vercel.
 
 No backend, no UI framework, no CSS framework.
 
@@ -95,16 +125,22 @@ npm run preview    # serve the production build on http://localhost:4173
     ├── pages/                  Home, Events, Register, NotFound
     ├── components/
     │   ├── layout/             Navbar, Footer, Layout, Logo, ScrollManager
-    │   ├── home/               Hero, About, StatCounter, Domains, FeaturedEvents, RegisterCta
+    │   ├── home/               Hero (+ useHeroMotion), About, StatCounter, Domains,
+    │   │                       MemoriesGallery, FeaturedEvents, RegisterCta
     │   ├── events/             EventCard, EventSearch, EventFilters, EventModal, EventArt,
     │   │                       EmptyState, SampleNotice, categoryIcons
     │   ├── registration/       RegistrationForm, FormField
     │   ├── decor/              Rangoli, Toran, BorderBand, Marquee (original SVG motifs)
+    │   ├── motion/             IntroSequence, PageTransition, CursorFollower, SplitReveal,
+    │   │                       KineticBand, Sunburst
     │   └── ui/                 Button
     ├── data/
     │   ├── events.js           sample events + categories + getEventById
+    │   ├── memories.js         gallery milestones (verified captions, photo slots)
     │   ├── festival.js         verified facts, stats, timeline, sources
     │   └── categoryStyles.js   poster colours/patterns per category
+    ├── motion/                 gsap setup, Lenis, MotionProvider, intro gating, useTilt,
+    │                           useDrift, flip hand-off, useReducedMotion
     ├── hooks/                  useEventFilters, useEventModal, useRegistrationForm,
     │                           useFocusTrap, useBodyScrollLock, useScrollReveal,
     │                           useScrollDirection, useCountUp, useDebouncedValue, useDocumentTitle
@@ -128,7 +164,7 @@ npm run preview    # serve the production build on http://localhost:4173
 
 **Unit tests** (`npm test`) — 22 tests covering the data shape, search/filter logic (category, keyword, combined, AND semantics, empty input), every validator, and the mock API (success, duplicate, re-validation, server error).
 
-**End-to-end smoke test** (`scripts/e2e_check.py`, 44 checks) — navigation and active states, search, filters, combined filtering, keyboard filter navigation, empty state and reset, modal open/close via button/Escape/backdrop/Back, focus trap and focus return, not-found event, register pre-selection, form validation and errors, loading state, double-submit prevention, success, duplicate and server-error states, mobile menu, mobile modal, 404, and zero console errors.
+**End-to-end smoke test** (`scripts/e2e_check.py`, 51 checks) — navigation and active states, search, filters, combined filtering, keyboard filter navigation, empty state and reset, modal open/close via button/Escape/backdrop/Back, focus trap and focus return, not-found event, register pre-selection, form validation and errors, loading state, double-submit prevention, success, duplicate and server-error states, mobile menu, mobile modal, 404, zero console errors, plus the opening sequence (plays once, skippable, inert background, deep links bypass it) and reduced-motion behaviour.
 
 ```bash
 npm run build && npm run preview          # in one terminal

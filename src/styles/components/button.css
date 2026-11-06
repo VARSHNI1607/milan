@@ -112,3 +112,12 @@
     transform: rotate(360deg);
   }
 }
+
+/* Hit-area guard: the face moves 2–4px when pressed; this invisible margin
+   keeps the original area hoverable so the cursor can't fall off the edge
+   and make the button flicker between hover and rest. */
+.btn::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+}

@@ -3,6 +3,7 @@ import Button from '../components/ui/Button.jsx';
 import Rangoli from '../components/decor/Rangoli.jsx';
 import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
 import '../styles/components/not-found.css';
+import SplitReveal from '../components/motion/SplitReveal.jsx';
 
 export default function NotFound() {
   useDocumentTitle('Page not found');
@@ -10,9 +11,9 @@ export default function NotFound() {
     <section className="not-found container">
       <Rangoli className="not-found__art" size={240} />
       <p className="eyebrow">Error 404</p>
-      <h1 className="not-found__title">
+      <SplitReveal as="h1" className="not-found__title">
         Wrong turn at <span className="serif-accent">the pandal.</span>
-      </h1>
+      </SplitReveal>
       <p className="lead">The page you’re looking for doesn’t exist. The festival is this way.</p>
       <div className="not-found__actions">
         <Button to="/" icon={ArrowRight}>Back home</Button>

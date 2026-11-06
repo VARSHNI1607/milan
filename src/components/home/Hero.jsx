@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { ArrowRight, ArrowUpRight, CalendarDays, MapPin } from 'lucide-react';
+import { useHeroMotion } from './useHeroMotion.js';
 import Button from '../ui/Button.jsx';
 import Toran from '../decor/Toran.jsx';
 import Rangoli from '../decor/Rangoli.jsx';
@@ -12,9 +14,11 @@ const TICKER = ['Dance', 'Music', 'Dramatics', 'Fashion', 'Literary', 'Fine Arts
 
 export default function Hero() {
   const { latestEdition, nextEdition } = festival;
+  const heroRef = useRef(null);
+  useHeroMotion(heroRef);
 
   return (
-    <section className="hero" aria-labelledby="hero-title">
+    <section className="hero" aria-labelledby="hero-title" ref={heroRef}>
       <Toran className="hero__toran" />
 
       <div className="hero__grid container">
@@ -22,7 +26,7 @@ export default function Hero() {
           <p className="eyebrow hero__eyebrow">SRMIST · Directorate of Student Affairs · Since {festival.firstEdition}</p>
 
           <h1 id="hero-title" className="hero__title">
-            <span className="hero__word" aria-hidden="true">
+            <span className="hero__word" aria-hidden="true" data-depth="-0.25">
               {WORD.split('').map((letter, i) => (
                 <span key={i} className="hero__letter" data-letter={letter} style={{ '--i': i }}>
                   {letter}
@@ -53,15 +57,24 @@ export default function Hero() {
         </div>
 
         <div className="hero__collage" aria-hidden="true">
-          <Rangoli className="hero__rangoli" />
-          <div className="hero__poster hero__poster--a">
-            <EventArt category="Dance" variant="tall" label="Dance" />
+          {/* data-depth: how far each layer travels with the cursor (negative = against it) */}
+          <div className="hero__rangoli-wrap" data-depth="-0.5">
+            <Rangoli className="hero__rangoli" />
           </div>
-          <div className="hero__poster hero__poster--b">
-            <EventArt category="Music" variant="square" label="Music" />
+          <div className="hero__poster hero__poster--a" data-depth="1.1" data-drift="-18">
+            <div className="hero__poster-card">
+              <EventArt category="Dance" variant="tall" label="Dance" />
+            </div>
           </div>
-          <div className="hero__poster hero__poster--c">
-            <EventArt category="Fashion" variant="square" label="Fashion" />
+          <div className="hero__poster hero__poster--b" data-depth="1.6" data-drift="-34">
+            <div className="hero__poster-card">
+              <EventArt category="Music" variant="square" label="Music" />
+            </div>
+          </div>
+          <div className="hero__poster hero__poster--c" data-depth="0.8" data-drift="-8">
+            <div className="hero__poster-card">
+              <EventArt category="Fashion" variant="square" label="Fashion" />
+            </div>
           </div>
         </div>
 

@@ -1,26 +1,88 @@
 .event-card {
   display: flex;
+  animation: card-in 600ms var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+  min-width: 0;
+}
+/* The inner box is what tilts (GSAP) — the outer article keeps the
+   entrance animation, so the two transforms never fight. */
+.event-card__inner {
+  position: relative;
+  display: flex;
   flex-direction: column;
+  flex: 1;
+  min-width: 0;
   background: var(--c-white);
   border: 2px solid var(--c-indigo);
   border-radius: var(--radius-sm);
-  transition:
-    transform var(--dur) var(--ease-out),
-    box-shadow var(--dur) var(--ease-out);
-  animation: card-in 500ms var(--ease-out) both;
-  min-width: 0;
+  transform-style: preserve-3d;
+  transition: box-shadow var(--dur) var(--ease-out);
 }
-.event-card:hover,
-.event-card:focus-within {
-  transform: translate(-3px, -3px);
-  box-shadow: var(--shadow-print);
+.event-card__inner:hover,
+.event-card:focus-within .event-card__inner {
+  box-shadow: 7px 7px 0 var(--c-indigo);
 }
-.event-card:hover .event-art__icon {
-  transform: translate(-50%, -54%) scale(1.06);
+
+/* Animated border: a vermilion line traces the card on hover / focus. */
+.event-card__trace {
+  position: absolute;
+  inset: -2px;
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  overflow: visible;
+  pointer-events: none;
+  z-index: 3;
 }
+.event-card__trace rect {
+  fill: none;
+  stroke: var(--c-vermilion);
+  stroke-width: 4;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 700ms var(--ease-in-out);
+}
+.event-card__inner:hover .event-card__trace rect,
+.event-card:focus-within .event-card__trace rect {
+  stroke-dashoffset: 0;
+}
+
+/* Poster zoom + label + icon */
 .event-card__art {
   position: relative;
+  overflow: hidden;
   border-bottom: 2px solid var(--c-indigo);
+}
+.event-card .event-art__pattern,
+.event-card .event-art__window,
+.event-card .event-art__photo {
+  transition: transform 900ms var(--ease-out);
+}
+.event-card__inner:hover .event-art__pattern,
+.event-card:focus-within .event-art__pattern {
+  transform: scale(1.18) rotate(-2deg);
+}
+.event-card__inner:hover .event-art__window,
+.event-card:focus-within .event-art__window,
+.event-card__inner:hover .event-art__photo {
+  transform: translateX(-50%) scale(1.06);
+}
+.event-card__inner:hover .event-art__icon,
+.event-card:focus-within .event-art__icon {
+  transform: translate(-50%, -56%) scale(1.12) rotate(-6deg);
+}
+.event-card .event-art__label {
+  transition:
+    letter-spacing var(--dur) var(--ease-out),
+    background-color var(--dur),
+    color var(--dur),
+    transform var(--dur) var(--ease-out);
+}
+.event-card__inner:hover .event-art__label,
+.event-card:focus-within .event-art__label {
+  letter-spacing: 0.22em;
+  background: var(--art-frame);
+  color: var(--art-bg);
+  transform: translateX(4px);
 }
 .event-card__sample {
   position: absolute;
@@ -45,6 +107,22 @@
 .event-card__title {
   font-size: var(--fs-lg);
   line-height: 1.05;
+  transition:
+    color var(--dur),
+    transform var(--dur) var(--ease-out);
+}
+.event-card__inner:hover .event-card__title,
+.event-card:focus-within .event-card__title {
+  color: var(--c-vermilion-deep);
+  transform: translateX(4px);
+}
+.event-card__tagline,
+.event-card__desc {
+  transition: transform var(--dur) var(--ease-out) 40ms;
+}
+.event-card__inner:hover .event-card__tagline,
+.event-card__inner:hover .event-card__desc {
+  transform: translateX(4px);
 }
 .event-card__tagline {
   font-family: var(--font-serif);
@@ -115,6 +193,8 @@
 @media (min-width: 900px) {
   .event-card--featured {
     grid-column: span 2;
+  }
+  .event-card--featured .event-card__inner {
     flex-direction: row;
   }
   .event-card--featured .event-card__art {
@@ -140,6 +220,18 @@
   }
 }
 
+.event-card .event-art {
+  animation: art-unmask 800ms var(--ease-in-out) both;
+  animation-delay: calc(var(--i, 0) * 70ms + 120ms);
+}
+@keyframes art-unmask {
+  from {
+    clip-path: inset(100% 0 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
 @keyframes card-in {
   from {
     opacity: 0;

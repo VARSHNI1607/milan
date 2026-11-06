@@ -8,7 +8,7 @@ function ring(count, radius, render) {
   return Array.from({ length: count }, (_, i) => render((360 / count) * i, radius, i));
 }
 
-export default function Rangoli({ className = '', palette = 'warm', size = 600 }) {
+export default function Rangoli({ className = '', palette = 'warm', size = 600, ...rest }) {
   const colors =
     palette === 'night'
       ? { a: '#F5A623', b: '#E2391B', c: '#E5197A', d: '#F6EEDF', line: '#F6EEDF' }
@@ -65,6 +65,7 @@ export default function Rangoli({ className = '', palette = 'warm', size = 600 }
       height={size}
       aria-hidden="true"
       focusable="false"
+      {...rest}
     >
       {shapes}
     </svg>

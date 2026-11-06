@@ -109,16 +109,10 @@ a.domains__row:focus-visible .domains__note {
   }
   .domains__thumb {
     width: 96px;
-    opacity: 0;
-    transform: translateX(-16px) rotate(-4deg);
-    transition:
-      opacity var(--dur) var(--ease-out),
-      transform var(--dur) var(--ease-out);
+    transition: transform var(--dur) var(--ease-out);
   }
-  a.domains__row:hover .domains__thumb,
-  a.domains__row:focus-visible .domains__thumb {
-    opacity: 1;
-    transform: none;
+  .domains__row:hover .domains__thumb {
+    transform: rotate(-4deg) scale(1.05);
   }
   .domains__arrow {
     display: block;
@@ -133,3 +127,69 @@ a.domains__row:focus-visible .domains__note {
     color: var(--c-marigold);
   }
 }
+
+/* Typography shift on the active row */
+.domains__name {
+  transition: transform var(--dur) var(--ease-out);
+}
+.domains__row:hover .domains__name,
+.domains__row:focus-visible .domains__name {
+  transform: translateX(0.75rem);
+}
+/* Dim the other rows' contents (not the row itself — GSAP owns row opacity). */
+.domains__row > * {
+  transition:
+    opacity var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+.domains__list[data-active]:not([data-active='']) .domains__row:not(:hover):not(:focus-visible) > * {
+  opacity: 0.3;
+}
+.domains {
+  transition: background-color var(--dur);
+}
+
+/* Cursor-trailing poster (enabled only where the hover reveal runs) */
+.domains__float {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) and (min-width: 900px) {
+  .domains__float {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 220px;
+    aspect-ratio: 3 / 4;
+    margin: -170px 0 0 -110px; /* centre on the cursor, slightly above it */
+    pointer-events: none;
+    z-index: 2;
+    visibility: hidden;
+    opacity: 0;
+    border: 3px solid var(--c-indigo);
+    box-shadow: var(--shadow-print);
+    background: var(--c-indigo);
+    overflow: hidden;
+  }
+  .domains__float-item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transform: scale(1.12);
+    transition:
+      opacity 280ms var(--ease-out),
+      transform 600ms var(--ease-out);
+  }
+  .domains__float-item.is-active {
+    opacity: 1;
+    transform: none;
+  }
+  .domains__float-item .event-art {
+    height: 100%;
+  }
+  /* The trailing poster replaces the small inline thumbnails here. */
+  .domains__thumb {
+    visibility: hidden;
+  }
+}
+.domains { overflow-x: clip; }

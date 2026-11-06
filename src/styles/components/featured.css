@@ -69,3 +69,8 @@
 .featured__rail > li > .event-card {
   width: 100%;
 }
+
+.featured__rail .event-card,
+.featured__rail .event-art {
+  animation: none;
+}

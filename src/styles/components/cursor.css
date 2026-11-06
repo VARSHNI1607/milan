@@ -1,0 +1,57 @@
+.cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 150;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 200ms;
+}
+.cursor.is-visible {
+  opacity: 1;
+}
+.cursor__ring {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  border: 2px solid var(--c-vermilion);
+  background: var(--c-marigold);
+  rotate: 45deg;
+  transition:
+    width 300ms var(--ease-out),
+    height 300ms var(--ease-out),
+    margin 300ms var(--ease-out),
+    background-color 300ms,
+    rotate 500ms var(--ease-out);
+}
+.cursor.is-hover .cursor__ring {
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  background: transparent;
+  rotate: 135deg;
+}
+.cursor.has-label .cursor__ring {
+  width: 74px;
+  height: 74px;
+  margin: -37px 0 0 -37px;
+  background: var(--c-marigold);
+  border-color: var(--c-indigo);
+  rotate: 0deg;
+  border-radius: 50%;
+}
+.cursor.is-down .cursor__ring {
+  scale: 0.8;
+}
+.cursor__label {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--c-indigo);
+  white-space: nowrap;
+}

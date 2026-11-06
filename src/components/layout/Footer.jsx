@@ -9,7 +9,7 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="footer">
+    <footer className="footer" data-shell>
       <BorderBand tone="vermilion" />
       <div className="footer__inner container">
         <div className="footer__brand">
