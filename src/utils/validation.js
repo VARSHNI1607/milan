@@ -9,10 +9,10 @@ export const FIELD_LIMITS = {
 };
 
 const NAME_PATTERN = /^[\p{L}][\p{L}\p{M}\s.'-]*$/u;
-// Pragmatic email check: local@domain.tld, no spaces, tld ≥ 2 chars.
-const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i;
 
-/** Strips spaces, dashes, brackets and an optional +91 / 0 prefix. */
+
+const EMAIL_PATTERN =/^[^\s@.]+(?:\.[^\s@.]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z]{2,}$/i;
+
 export function normalisePhone(raw) {
   let digits = String(raw ?? '').replace(/[\s\-()]/g, '');
   if (digits.startsWith('+91')) digits = digits.slice(3);

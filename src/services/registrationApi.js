@@ -80,12 +80,21 @@ export async function submitRegistration(
     });
   }
 
+  const phone = normalisePhone(values.phone);
+  const phoneTaken = records.some((r) => r.phone === phone && r.eventId === values.eventId);
+  if (phoneTaken) {
+    throw new RegistrationError('This phone number is already registered for this event.', {
+      status: 409,
+      fieldErrors: { phone: 'Already registered for this event.' },
+    });
+  }
+
   const record = {
     reference: makeReference(),
     fullName: values.fullName.trim(),
     email,
     college: values.college.trim(),
-    phone: normalisePhone(values.phone),
+    phone,
     eventId: values.eventId,
     createdAt: new Date().toISOString(),
   };
